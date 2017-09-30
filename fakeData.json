@@ -1,0 +1,89 @@
+{
+  "productsList":{
+    "pc":{
+      "title": "pc产品",
+      "list":[{
+        "name": "数据统计",
+        "url": "http://www.baidu.com"
+      },
+        {
+          "name": "数据分析",
+          "url": "http://www.baidu.com",
+          "hot": true
+        },
+        {
+          "name": "数据预测",
+          "url": "http://www.baidu.com"
+        },
+        {
+          "name": "数据发布",
+          "url": "http://www.baidu.com"
+        }]
+    },
+    "app":{
+      "title": "应用类",
+      "list": [{
+        "name": "数据统计",
+        "url": "http://www.baidu.com",
+        "hot": true
+      },
+        {
+          "name": "数据分析",
+          "url": "http://www.baidu.com"
+        },
+        {
+          "name": "数据预测",
+          "url": "http://www.baidu.com"
+        },
+        {
+          "name": "数据发布",
+          "url": "http://www.baidu.com"
+        }]
+    }
+  },
+  "latestNews":[{
+    "name": "数据统计",
+    "url": "http://www.baidu.com"
+  },
+    {
+      "name": "数据分析",
+      "url": "http://www.baidu.com",
+      "hot": true
+    },
+    {
+      "name": "数据预测",
+      "url": "http://www.baidu.com"
+    },
+    {
+      "name": "广告发布",
+      "url": "http://www.baidu.com"
+    }],
+  "contentList":[{
+    "img": "../assets/images/pro-img.jpg",
+    "title": "品牌营销",
+    "dis": "品牌营销是一种提供给大众的免费产品",
+    "moreUrl": "http://www.baidu.com",
+    "buyUrl": "http://www.baidu.com"
+  },
+    {
+      "img": "../assets/images/pro-img.jpg",
+      "title": "使命必达",
+      "dis": "使命必达使命必达使命必达使命必达使命必达使命必达",
+      "moreUrl": "http://www.baidu.com",
+      "buyUrl": "http://www.baidu.com"
+    },
+    {
+      "img": "../assets/images/pro-img.jpg",
+      "title": "开放产品",
+      "dis": "开放产品是一种提供给大众的免费产品",
+      "moreUrl": "http://www.baidu.com",
+      "buyUrl": "http://www.baidu.com"
+    },
+    {
+      "img": "../assets/images/pro-img.jpg",
+      "title": "勇攀高峰",
+      "dis": "开放产品是一种提供给大众的免费产品开放产品是一种提供给大众的免费产品开放产品是一种提供给大众的免费产品",
+      "moreUrl": "http://www.baidu.com",
+      "buyUrl": "http://www.baidu.com"
+    }]
+}

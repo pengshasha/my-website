@@ -1,15 +1,8 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Index from '@/pages/index'
+const INDEX = r => require.ensure([], () => r(require('../pages/index')), 'index');
 
-Vue.use(Router)
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Hello',
-      component: Index
-    }
-  ]
-})
+export default [{
+  path: '/',
+  name: 'index',
+  component: INDEX
+}]

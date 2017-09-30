@@ -3,7 +3,7 @@
     <div class="header">
       <div class="container">
         <a href="#" class="logo-img">
-          <img src="../assets/logo.png">
+          <img src="../assets/images/logo.png">
         </a>
         <div class="logo-text">
           <a href="#">登陆</a>

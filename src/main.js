@@ -3,18 +3,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from './components/Layout'
-import Index from './pages/index'
+import routes from './router/index'
+import VueResource from 'vue-resource'
 
 Vue.use(Router)
+Vue.use(VueResource)
 
 var router = new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Hello',
-      component: Index
-    }
-  ]
+  routes
 })
 
 /* eslint-disable no-new */

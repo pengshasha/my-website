@@ -12,6 +12,7 @@ var webpack = require('webpack')
 var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = require('./webpack.dev.conf')
 
+
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
 // automatically open browser, if not set will be false
@@ -80,6 +81,28 @@ devMiddleware.waitUntilValid(() => {
   _resolve()
 })
 
+var apiServer = express()
+var bodyParser = require('body-parser')
+var fs = require('fs')
+apiServer.use(bodyParser.urlencoded({ extended: true }))
+apiServer.use(bodyParser.json())
+var apiRouter = express.Router()
+apiRouter.route('/:apiName').all(function (req, res) {
+  fs.readFile('./fakeData.json', 'utf8',function (err, data) {
+    if(err) throw err
+    var data = JSON.parse(data)
+    if (data[req.params.apiName]) {
+      res.json(data[req.params.apiName])
+    }
+    else {
+      res.send('no such api name')
+    }
+  })
+})
+apiServer.use('/api',apiRouter)
+apiServer.listen(port + 1, function () {
+  console.log('JSON Server is running')
+})
 var server = app.listen(port)
 
 module.exports = {
