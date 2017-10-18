@@ -67,4 +67,7 @@ a,a:hover{
   margin: 0 auto;
   overflow: hidden;
 }
+.swiper-pagination-bullet-active{
+  background: #41b883!important;
+}
 

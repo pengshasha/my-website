@@ -19,7 +19,16 @@
         </div>
       </div>
       <div class="content-right">
-          <div class="slider-wrap"></div>
+          <div>
+            <template>
+              <swiper :options="swiperOption" class="slider-wrap">
+                <swiper-slide v-for="slide in banners">
+                  <img :src="slide">
+                </swiper-slide>
+                <div class="swiper-pagination" slot="pagination"></div>
+              </swiper>
+            </template>
+          </div>
           <ul class="product-list-wrap">
             <li class="pro-list-item"　v-for="contentItem in contentList">
               <div class="img-box">
@@ -36,125 +45,88 @@
   </div>
 </template>
 <script>
+  require('swiper/dist/css/swiper.css')
+  import { swiper, swiperSlide } from 'vue-awesome-swiper'
   export default{
     data(){
       return {
-        productsList:{
-          pc:{
-            title:'pc产品',
-            list:[{
-              name: '数据统计',
-              url: 'http://www.baidu.com'
-            },
-              {
-                name: '数据分析',
-                url: 'http://www.baidu.com',
-                hot: true
-              },
-              {
-                name: '数据预测',
-                url: 'http://www.baidu.com'
-              },
-              {
-                name: '数据发布',
-                url: 'http://www.baidu.com'
-              }]
-          },
-          app:{
-            title: '应用类',
-            list: [{
-              name: '数据统计',
-              url: 'http://www.baidu.com',
-              hot: true
-            },
-              {
-                name: '数据分析',
-                url: 'http://www.baidu.com'
-              },
-              {
-                name: '数据预测',
-                url: 'http://www.baidu.com'
-              },
-              {
-                name: '数据发布',
-                url: 'http://www.baidu.com'
-              }]
-          }
-        },
-        latestNews:[{
-          name: '数据统计',
-          url: 'http://www.baidu.com'
-        },
-          {
-            name: '数据分析',
-            url: 'http://www.baidu.com',
-            hot: true
-          },
-          {
-            name: '数据预测',
-            url: 'http://www.baidu.com'
-          },
-          {
-            name: '广告发布',
-            url: 'http://www.baidu.com'
-          }],
-        contentList:[{
-          img: require('../assets/images/pro-img.jpg'),
-          title: '品牌营销',
-          dis: '品牌营销是一种提供给大众的免费产品',
-          moreUrl: 'http://www.baidu.com',
-          buyUrl: 'http://www.baidu.com'
-        },
-          {
-            img: require('../assets/images/pro-img.jpg'),
-            title: '使命必达',
-            dis: '使命必达使命必达使命必达使命必达使命必达使命必达',
-            moreUrl: 'http://www.baidu.com',
-            buyUrl: 'http://www.baidu.com'
-          },
-          {
-            img: require('../assets/images/pro-img.jpg'),
-            title: '开放产品',
-            dis: '开放产品是一种提供给大众的免费产品',
-            moreUrl: 'http://www.baidu.com',
-            buyUrl: 'http://www.baidu.com'
-          },
-          {
-            img: require('../assets/images/pro-img.jpg'),
-            title: '勇攀高峰',
-            dis: '开放产品是一种提供给大众的免费产品开放产品是一种提供给大众的免费产品开放产品是一种提供给大众的免费产品',
-            moreUrl: 'http://www.baidu.com',
-            buyUrl: 'http://www.baidu.com'
-          }]
+        productsList:{},
+        latestNews:[],
+        contentList:[],
+        banners: [require('../assets/images/pic1.jpg'),require('../assets/images/pic2.jpg'),require('../assets/images/pic3.jpg'),require('../assets/images/pic4.jpg')],
+        swiperOption: {
+          autoplay: 3500,
+          setWrapperSize :true,
+          pagination : '.swiper-pagination',
+          paginationClickable :true,
+          mousewheelControl : true,
+          observeParents:true,
+        }
       }
     },
+    components: {
+      swiper,
+      swiperSlide
+    },
     created:function () {
-      this.$http.get('/api/productsList')
-        .then(function (data) {
-          console.log(data)
-        },function (err) {
-          console.log(err)
-        })
+      this.getIndexData()
     },
     mounted:function () {
-      this.navTab()
-          .calculatedWidth();
+      var _this = this
+      _this.navTab()
     },
     methods:{
-      calculatedWidth:function () {
-        var $rightDom = $('.content-right'),
-          $leftDom = $('.nav-left'),
-          $indexDom = $('.index '),
-          $rightWidth = Math.floor($indexDom.innerWidth()*(.9))-$leftDom.outerWidth();
-        $rightDom.css('width', $rightWidth);
-        return this;
-      },
+      //导航效果
       navTab:function () {
-        var $navDom = $('.nav-small-title');
-        $navDom.on('click',function () {
-          $(this).next('.nav-items').slideToggle();
+        var $leftWrap = $('.nav-left'),
+            $navDom = $('.nav-small-title');
+        $leftWrap.on('click', $navDom, function (e) {//动态数据需要用代理
+          $(e.target).next('.nav-items').slideToggle();
         })
         return this;
+      },
+      //获取页面数据
+      getIndexData:function () {
+        var _this = this,
+          reqUrl = {
+            productsList: '/api/productsList',
+            latestNews: '/api/latestNews',
+            contentList: '/api/contentList'
+          },
+        tasks = [],
+        reqUrlLength = Object.keys(reqUrl).length;
+        for(var i = 0; i < reqUrlLength; i++) {
+          tasks[i] = $.Deferred();
+        }
+        for(var j in reqUrl) {
+          var index = 0
+          _this.$http.get(reqUrl[j]).then(function (data) {
+            if(data && data.status === 200) {
+              tasks[index].resolve(data.body)
+            }else {
+              tasks[index].reject('数据获取失败')
+            }
+            index++
+          })
+        }
+        $.when.apply(null, tasks).then(function (productsData, newsData, contentData) {
+          if(productsData && newsData && contentData) {
+            Array.isArray(contentData) && contentData.forEach(function (item, index) {
+               if(item && item['img']) {
+                 console.log(item['img'])
+                 //require()引入一个变量加上一个字符串就会报warning，但可以正确引入图片。只引入变量，则报错，且无法引入图片。
+                 item['img'] = require('../assets/images/'+ item['img'] )
+               }
+            })
+            _this.productsList = productsData
+            _this.latestNews = newsData
+            _this.contentList = contentData
+          } else {
+            console.error('获取数据失败！')
+          }
+        },function (err) {
+          console.error(err)
+        })
       }
     }
 
@@ -167,10 +139,14 @@
     background: #E8E8E8;
     overflow: hidden;
   }
+  .index .container{
+    position: relative;
+  }
   .nav-left{
+    position: absolute;
     width: 200px;
-    float: left;
-    padding-right: 15px;
+    top:0;
+    left: 0;
   }
   .nav-wrap{
     background: #fff;
@@ -215,8 +191,14 @@
     padding: 0 5px;
   }
   .content-right{
-    float: right;
-    padding: 0 50px 30px 50px;
+    padding-left: 220px;
+    padding-bottom: 30px;
+    box-sizing: border-box;
+  }
+  .product-list-wrap{
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 40px;
     box-sizing: border-box;
   }
   .pro-list-item{
@@ -277,7 +259,9 @@
   .slider-wrap{
     width: 100%;
     height: 300px;
-    background: #41b883;
     margin-bottom: 40px;
+  }
+  .slider-wrap img{
+    width: 100%;
   }
 </style>

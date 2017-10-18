@@ -59,28 +59,28 @@
       "url": "http://www.baidu.com"
     }],
   "contentList":[{
-    "img": "../assets/images/pro-img.jpg",
+    "img": "pro-img.jpg",
     "title": "品牌营销",
     "dis": "品牌营销是一种提供给大众的免费产品",
     "moreUrl": "http://www.baidu.com",
     "buyUrl": "http://www.baidu.com"
   },
     {
-      "img": "../assets/images/pro-img.jpg",
+      "img": "pro-img.jpg",
       "title": "使命必达",
       "dis": "使命必达使命必达使命必达使命必达使命必达使命必达",
       "moreUrl": "http://www.baidu.com",
       "buyUrl": "http://www.baidu.com"
     },
     {
-      "img": "../assets/images/pro-img.jpg",
+      "img": "pro-img.jpg",
       "title": "开放产品",
       "dis": "开放产品是一种提供给大众的免费产品",
       "moreUrl": "http://www.baidu.com",
       "buyUrl": "http://www.baidu.com"
     },
     {
-      "img": "../assets/images/pro-img.jpg",
+      "img": "pro-img.jpg",
       "title": "勇攀高峰",
       "dis": "开放产品是一种提供给大众的免费产品开放产品是一种提供给大众的免费产品开放产品是一种提供给大众的免费产品",
       "moreUrl": "http://www.baidu.com",
