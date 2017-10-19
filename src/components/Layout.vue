@@ -6,9 +6,9 @@
           <img src="../assets/images/logo.png">
         </a>
         <div class="logo-text">
-          <a href="#">登陆</a>
-          <a href="#">注册</a>
-          <a href="#">关于</a>
+          <a href="#" @click="openDialog('isShowLoginDialog')">登陆</a>
+          <a href="#" @click="openDialog('isShowRegDialog')">注册</a>
+          <a href="#" @click="openDialog('isShowAboutDialog')">关于</a>
         </div>
       </div>
     </div>
@@ -18,11 +18,40 @@
       </keep-alive>
     </div>
     <div class="footer">@ 2016 pengshasha-vue</div>
+    <my-dialog :isShowDialog="isShowLoginDialog" @on-close="closeDialog('isShowLoginDialog')">
+      <login-form></login-form>
+    </my-dialog>
+    <my-dialog :isShowDialog="isShowRegDialog" @on-close="closeDialog('isShowRegDialog')">
+      <p>注册</p>
+    </my-dialog>
+    <my-dialog :isShowDialog="isShowAboutDialog" @on-close="closeDialog('isShowAboutDialog')">
+      <p>关于</p>
+    </my-dialog>
   </div>
 </template>
 <script>
+  import myDialog from './dialog'
+  import loginForm from './login_form'
   export default {
-
+    data() {
+      return {
+        isShowLoginDialog: false,
+        isShowRegDialog: false,
+        isShowAboutDialog: false
+      }
+    },
+    components:{
+      myDialog,
+      loginForm
+    },
+    methods:{
+      openDialog: function (item) {
+        this[item] = true
+      },
+      closeDialog: function (item) {
+        this[item] = false
+      }
+    }
   }
 </script>
 <style scoped>

@@ -59,8 +59,9 @@
           setWrapperSize :true,
           pagination : '.swiper-pagination',
           paginationClickable :true,
-          mousewheelControl : true,
+          mousewheelControl : false,
           observeParents:true,
+          loop:true
         }
       }
     },
@@ -69,7 +70,7 @@
       swiperSlide
     },
     created:function () {
-      this.getIndexData()
+      this.getIndexData()　//数据从另外一个端口获取，使用代理服务器
     },
     mounted:function () {
       var _this = this
