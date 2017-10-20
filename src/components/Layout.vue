@@ -6,9 +6,10 @@
           <img src="../assets/images/logo.png">
         </a>
         <div class="logo-text">
-          <a href="#" @click="openDialog('isShowLoginDialog')">登陆</a>
+          <a href="#" v-show="!isLogin" @click="openDialog('isShowLoginDialog')">登陆</a>
+          <a href="#" v-show="isLogin" :class="{loginName:isLogin}">{{userName}}</a>
           <a href="#" @click="openDialog('isShowRegDialog')">注册</a>
-          <a href="#" @click="openDialog('isShowAboutDialog')">关于</a>
+          <a href="#" @click="openDialog('isShowAboutDialog')">退出</a>
         </div>
       </div>
     </div>
@@ -19,42 +20,56 @@
     </div>
     <div class="footer">@ 2016 pengshasha-vue</div>
     <my-dialog :isShowDialog="isShowLoginDialog" @on-close="closeDialog('isShowLoginDialog')">
-      <login-form></login-form>
+      <login-form @on-colse2="closeDialog('isShowLoginDialog',$event)"></login-form>
     </my-dialog>
     <my-dialog :isShowDialog="isShowRegDialog" @on-close="closeDialog('isShowRegDialog')">
-      <p>注册</p>
+      <register></register>
     </my-dialog>
     <my-dialog :isShowDialog="isShowAboutDialog" @on-close="closeDialog('isShowAboutDialog')">
-      <p>关于</p>
+      <logout :isLoginStatus="isLogin" @logout="closeDialog('isShowAboutDialog',$event)"></logout>
     </my-dialog>
   </div>
 </template>
 <script>
   import myDialog from './dialog'
   import loginForm from './login_form'
+  import logout from './logout'
+  import register from './register'
   export default {
     data() {
       return {
         isShowLoginDialog: false,
         isShowRegDialog: false,
-        isShowAboutDialog: false
+        isShowAboutDialog: false,
+        userName:'',
+        isLogin: false
       }
     },
     components:{
       myDialog,
-      loginForm
+      loginForm,
+      logout,
+      register
     },
     methods:{
       openDialog: function (item) {
         this[item] = true
       },
-      closeDialog: function (item) {
-        this[item] = false
+      closeDialog: function (message,item) {
+        if(item && item != '' && item!= 'logout'&& item!= 'reset') {
+          this.isLogin = true
+          this.userName = item
+        }
+        if(item === 'logout' && this.isLogin) {
+          this.isLogin = false
+          this.userName = ''
+        }
+        this[message] = false
       }
     }
   }
 </script>
-<style scoped>
+<style>
   .header{
     width: 100%;
     height: 50px;
@@ -98,5 +113,40 @@
     line-height: 50px;
     background: #d8d6d6;
     text-align: center;
+  }
+  .loginName{
+    color: red;
+  }
+  .loginName:after{
+    color: #000;
+  }
+  .btn-group{
+    padding: 20px 0;
+    text-align: center;
+    padding-left: 15%;
+  }
+  .btn-group .btn{
+    width: 80px;
+    height:30px;
+    margin-right: 15px;
+    cursor: pointer;
+    color: rgba(0,0,0,1);
+    background: #fff;
+    border: 1px solid rgba(0,0,0,1);
+    border-radius: 8px;
+    outline: none;
+    transition: border-color ease-in-out .15s, background ease-in-out .15s;
+  }
+  .btn-group .btn:hover{
+    background: rgba(0,0,0,.8);
+    color: #fff;
+    border:  1px solid rgba(0,0,0,1);
+  }
+  .errorText{
+    font-size: 10px;
+    color: red;
+    line-height: 1em;
+    padding-left: 170px;
+    text-align: left;
   }
 </style>

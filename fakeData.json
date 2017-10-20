@@ -85,5 +85,11 @@
       "dis": "开放产品是一种提供给大众的免费产品开放产品是一种提供给大众的免费产品开放产品是一种提供给大众的免费产品",
       "moreUrl": "http://www.baidu.com",
       "buyUrl": "http://www.baidu.com"
-    }]
+    }
+  ],
+  "getLoginData":{
+      "userName":"pengshasha",
+      "password":"ps316652",
+      "token":"abcdefg"
+  }
 }

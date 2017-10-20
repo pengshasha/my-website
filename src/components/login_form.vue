@@ -3,15 +3,18 @@
     <form>
       <div class="row-line user-line">
         <label>用户名：</label>
-        <input type="text" v-model="user" placeholder="请输入用户名">
+        <input type="text" id="userText" v-model="user" placeholder="请输入用户名" v-validate="'required|min:3|max:15'" :class="{'input': true, 'is-danger': errors.has('email') }" name="user">
+        <p v-show="errors.has('user')&&!loginMessageShow" class="errorText">{{ errors.first('user')}}</p>
       </div>
       <div class="row-line password-line">
         <label>密码：</label>
-        <input type="text" v-model="password" placeholder="请输入密码">
+        <input type="text" v-model="password" placeholder="请输入密码" v-validate="'required|min:6'" name="password">
+        <p v-show="errors.has('password')&&!loginMessageShow" class="errorText">{{ errors.first('password')}}</p>
+        <p v-show="loginMessageShow" class="errorText">{{ loginMessage }}</p>
       </div>
       <div class="btn-group">
-        <button @click="submitData">登陆</button>
-        <button type="reset" @click="resetData">取消</button>
+        <input type="button" class="btn" value="登陆" @click="submitData">
+        <button type="reset" class="btn" @click="resetData">取消</button>
       </div>
     </form>
   </div>
@@ -21,17 +24,40 @@
     data() {
       return {
         'user': '',
-        'password': ''
+        'password': '',
+        'loginMessage': '',
+        'loginMessageShow': false
       }
     },
     methods:{
       submitData: function () {
-        console.log(this.user+'---'+this.password)
+        var _this = this
+        this.$http.get('/api/getLoginData').then(function (data) {
+          if(data && data.status === 200) {
+            var loginData = data.body;
+            if(loginData["userName"] && loginData["password"] && loginData["userName"] === this.user && loginData["password"] === this.password) {
+              _this.$emit('on-colse2',this.user)
+            } else {
+              this.loginMessageShow = true
+              this.loginMessage = '用户名或密码错误，请重新输入！'
+              this.user = ''
+              this.password = ''
+            }
+          }
+        }).catch(function (error) {
+          if(error) {
+            console.log(error)
+            throw error;
+          }
+        })
       },
       resetData: function () {
         this.user = ''
         this.password = ''
       }
+    },
+    mounted:function () {
+      $('#userText').focus()
     }
 
   }
@@ -43,7 +69,7 @@
     text-align: center;
   }
   .row-line label{
-    width: 15%;
+    width: 18%;
     display: inline-block;
     font-size: 15px;
   }
@@ -60,26 +86,5 @@
     border-color: #000;
     box-shadow: 0 0 7px 0px rgba(0,0,0,.5);
   }
-  .btn-group{
-    padding: 20px 0;
-    text-align: center;
-    padding-left: 15%;
-  }
-  .btn-group button{
-    width: 80px;
-    height:30px;
-    margin-right: 15px;
-    cursor: pointer;
-    color: rgba(0,0,0,1);
-    background: #fff;
-    border: 1px solid rgba(0,0,0,1);
-    border-radius: 8px;
-    outline: none;
-    transition: border-color ease-in-out .15s, background ease-in-out .15s;
-  }
-  .btn-group button:hover{
-    background: rgba(0,0,0,.8);
-    color: #fff;
-    border:  1px solid rgba(0,0,0,1);
-  }
+
 </style>
