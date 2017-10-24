@@ -62,7 +62,7 @@
     "img": "pro-img.jpg",
     "title": "品牌营销",
     "dis": "品牌营销是一种提供给大众的免费产品",
-    "moreUrl": "http://www.baidu.com",
+    "moreUrl": "/detail",
     "buyUrl": "http://www.baidu.com"
   },
     {
@@ -91,5 +91,18 @@
       "userName":"pengshasha",
       "password":"ps316652",
       "token":"abcdefg"
-  }
+  },
+  "detailList":[{
+    "name":"数据统计",
+    "detailUrl":"/detail/dataCount"
+  },{
+    "name":"数据分析",
+    "detailUrl":"/detail/dataFlow"
+    },{
+    "name":"数据预测",
+    "detailUrl":"/detail/dataForecast"
+  },{
+    "name":"数据发布",
+    "detailUrl":"/detail/dataRelease"
+  }]
 }

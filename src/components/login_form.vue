@@ -20,6 +20,7 @@
   </div>
 </template>
 <script>
+  import store from '../store'
   export default{
     data() {
       return {
@@ -36,12 +37,17 @@
           if(data && data.status === 200) {
             var loginData = data.body;
             if(loginData["userName"] && loginData["password"] && loginData["userName"] === this.user && loginData["password"] === this.password) {
-              _this.$emit('on-colse2',this.user)
+              _this.$emit('on-close-login',this.user)
             } else {
-              this.loginMessageShow = true
-              this.loginMessage = '用户名或密码错误，请重新输入！'
-              this.user = ''
-              this.password = ''
+              var storeName = store.getValue(this.user)
+              if(!!storeName && storeName == this.password) {
+                _this.$emit('on-close-login',this.user)
+              } else {
+                this.loginMessageShow = true
+                this.loginMessage = '用户名或密码错误，请重新输入！'
+                this.user = ''
+                this.password = ''
+              }
             }
           }
         }).catch(function (error) {

@@ -20,10 +20,10 @@
     </div>
     <div class="footer">@ 2016 pengshasha-vue</div>
     <my-dialog :isShowDialog="isShowLoginDialog" @on-close="closeDialog('isShowLoginDialog')">
-      <login-form @on-colse2="closeDialog('isShowLoginDialog',$event)"></login-form>
+      <login-form @on-close-login="closeDialog('isShowLoginDialog',$event)"></login-form>
     </my-dialog>
     <my-dialog :isShowDialog="isShowRegDialog" @on-close="closeDialog('isShowRegDialog')">
-      <register></register>
+      <register @on-close-reg="closeDialog('isShowRegDialog')"></register>
     </my-dialog>
     <my-dialog :isShowDialog="isShowAboutDialog" @on-close="closeDialog('isShowAboutDialog')">
       <logout :isLoginStatus="isLogin" @logout="closeDialog('isShowAboutDialog',$event)"></logout>
