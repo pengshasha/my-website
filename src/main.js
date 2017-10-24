@@ -7,6 +7,8 @@ import routes from './router/index'
 import VueResource from 'vue-resource'
 import VeeValidate,{Validator} from 'vee-validate'
 import message from 'vee-validate/dist/locale/zh_CN'
+import vueStore from 'vuex'
+import stores from './vueStore/index'
 
 Validator.addLocale(message);
 
@@ -22,6 +24,7 @@ const config = {
 Vue.use(VeeValidate,config)
 Vue.use(Router)
 Vue.use(VueResource)
+Vue.use(vueStore)
 
 
 var router = new Router({
@@ -29,10 +32,13 @@ var router = new Router({
   routes
 })
 
+var store = new vueStore.Store(stores)
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<Layout/>',
   components: { Layout }
 })

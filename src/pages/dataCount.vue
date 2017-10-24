@@ -53,10 +53,10 @@
     methods:{
       getTitleList: function () {
         var _this = this
-        _this.title = this.$route.query.name || '数据统计'
+        _this.title = this.$route.query.name
 //        _this.$http.get('/api/detailList').then(function (data) {
 //          if(data && data.status === 200) {
-//            _this.title = data.body[0]
+//            _this.title = data.body[0].name
 //          }
 //        })
       }

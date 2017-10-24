@@ -2,9 +2,9 @@
   <div class="layout">
     <div class="header">
       <div class="container">
-        <a href="#" class="logo-img">
+        <router-link to="/" class="logo-img">
           <img src="../assets/images/logo.png">
-        </a>
+        </router-link>
         <div class="logo-text">
           <a href="#" v-show="!isLogin" @click="openDialog('isShowLoginDialog')">登陆</a>
           <a href="#" v-show="isLogin" :class="{loginName:isLogin}">{{userName}}</a>
@@ -41,8 +41,8 @@
         isShowLoginDialog: false,
         isShowRegDialog: false,
         isShowAboutDialog: false,
-        userName:'',
-        isLogin: false
+//        userName:'',
+//        isLogin: false
       }
     },
     components:{
@@ -51,18 +51,34 @@
       logout,
       register
     },
+    computed:{
+      userName () {
+        return this.$store.state.userName
+      },
+      isLogin() {
+        return this.$store.state.isLogin
+      }
+    },
     methods:{
       openDialog: function (item) {
         this[item] = true
       },
       closeDialog: function (message,item) {
         if(item && item != '' && item!= 'logout'&& item!= 'reset') {
-          this.isLogin = true
-          this.userName = item
+//          this.isLogin = true
+//          this.userName = item
+          this.$store.commit('saveUserName',{
+            isLogin:true,
+            userName:item
+          })
         }
         if(item === 'logout' && this.isLogin) {
-          this.isLogin = false
-          this.userName = ''
+//          this.isLogin = false
+//          this.userName = ''
+          this.$store.commit('saveUserName',{
+            isLogin: false,
+            userName: ''
+          })
         }
         this[message] = false
       }

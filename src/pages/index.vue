@@ -36,7 +36,7 @@
               </div>
               <h4 class="pro-title">{{ contentItem.title }}</h4>
               <p class="pro-dis">{{ contentItem.dis }}</p>
-              <a :href="contentItem.moreUrl" class="pro-btn pro-look-more">查看详情</a>
+              <router-link :to="{path: contentItem.moreUrl, query: {name: '数据统计'}}" class="pro-btn pro-look-more"  >查看详情</router-link>
               <a :href="contentItem.buyUrl" class="pro-btn pro-buy-btn">立即购买</a>
             </li>
           </ul>

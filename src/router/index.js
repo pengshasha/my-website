@@ -15,9 +15,10 @@ export default [{
   path: '/detail',
   name: 'detail',
   component: DETAIL,
+
   children:[{
-      path:'',
-    redirect: 'dataCount'
+    path:'',
+    redirect:'dataCount'
     },{
       path: 'dataCount',
       name: 'dataCount',
